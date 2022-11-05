@@ -5,11 +5,13 @@ const indexHtml = join(process.env.DIST, 'dist/index.html')
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            preload: join(__dirname, 'preload.js')
+        }
     })
-    let contents = win.webContents
-
-    contents.openDevTools()
+    // 打开开发工具
+    // mainWindow.webContents.openDevTools()
 
     // win.loadURL('http://127.0.0.1:5173/')
     win.loadFile(indexHtml)
@@ -22,6 +24,6 @@ app.whenReady().then(() => {
     })
 })
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin') app.quit() // 非 macOS
 })
 
